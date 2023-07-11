@@ -1,5 +1,6 @@
-const routes = require('../Router/routes')
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const Joi = require('joi');
 
 const login = async (req, res) => {
     try {
@@ -16,7 +17,7 @@ const login = async (req, res) => {
         }
     
         // Check if the user exists
-        const user = await User.findOne({ username });
+        const user = await Users.findOne({ username, password });
         if (!user) {
         return res.status(401).json({ error: 'Invalid username or password' });
         }
@@ -28,7 +29,7 @@ const login = async (req, res) => {
         }
     
         // Generate JWT token
-        const token = jwt.sign({ id: user._id }, process.evn.SECRET_KEY);
+        const token = await jwt.sign({ id: user._id }, process.evn.SECRET_KEY);
     
         res.json({ token });
     } catch (error) {

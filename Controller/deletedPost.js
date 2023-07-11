@@ -1,4 +1,5 @@
 const routes = require('../Router/routes');
+const { Posts } = require('../models/Schema')
 
 
 const deletedPost = async (req, res) => {
@@ -6,7 +7,7 @@ const deletedPost = async (req, res) => {
         const postId = req.param.id;
 
         //find the post and delete
-        const deletePost = await Post.findByIdAndDelete(postId).exec();
+        const deletePost = await Posts.findByIdAndDelete(postId).exec();
         if (!deletePost) {
             return res.status(404).json({error: 'Post not found.' });
         }

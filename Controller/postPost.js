@@ -1,4 +1,5 @@
-const routes = require('../Router/routes');
+const { Posts } = require('../models/Schema');
+const joi = require('joi');
 
 const postPost = async (req, res) => {
     try {

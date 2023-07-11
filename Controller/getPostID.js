@@ -1,10 +1,11 @@
 const routes = require('../Router/routes');
+const { Posts } = require('../models/Schema')
 
 const getPostID = async (req, res) => {
     try {
         const postId = req.params.id;
     
-        const post = await Post.findById(postId).exec();
+        const post = await Posts.findById(postId).exec();
         if (!post) {
           return res.status(404).json({ error: 'Post not found' });
         }

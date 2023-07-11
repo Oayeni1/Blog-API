@@ -11,19 +11,19 @@ const userSchema = new schema({
 
 const Users = mongoose.model('Users', userSchema);
 
-module.exports=userSchema;
 
 
 //Post's Schema
 const postSchema = new mongoose.Schema({
-    title: String,
-    content: String,
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
-    },
-  });
-  
-  const Posts = mongoose.model('Posts', postSchema);
+  title: String,
+  content: String,
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Users',
+  },
+});
 
-  module.exports=postSchema;
+const Posts = mongoose.model('Posts', postSchema);
+
+module.exports=Users;
+module.exports=Posts;

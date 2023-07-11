@@ -1,6 +1,7 @@
-const routes = require('../Router/routes');
 const validate = require('../Validation/toValidate');
 const bcrypt = require('bcrypt');
+const { Users } = require('../models/Schema');
+const Joi = require('joi');
 
 const register = async (req, res) => {
     try {
@@ -17,7 +18,7 @@ const register = async (req, res) => {
         }
     
         // Check if the username is already taken
-        const existingUser = await User.findOne({ username });
+        const existingUser = await Users.findOne({ username });
         if (existingUser) {
           return res.status(409).json({ error: 'Username is already taken' });
         }

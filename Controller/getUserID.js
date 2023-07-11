@@ -1,10 +1,11 @@
 const routes = require('../Router/routes');
+const { Users } = require('../models/Schema')
 
 const getUserId = async (req, res) => {
     try {
         const userId = req.params.id;
     
-        const user = await User.findById(userId).exec();
+        const user = await Users.findById(userId).exec();
         if (!user) {
         return res.status(404).json({ error: 'User not found' });
         }
