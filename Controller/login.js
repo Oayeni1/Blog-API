@@ -1,7 +1,40 @@
 const routes = require('../Router/routes')
+const bcrypt = require('bcrypt');
 
-const login = (req, res) => {
-    res.send('login');
+const login = async (req, res) => {
+    try {
+        const { username, password } = req.body;
+    
+        // Validate input
+        const schema = Joi.object({
+        username: Joi.string().required(),
+        password: Joi.string().required(),
+        });
+        const { error } = schema.validate({ username, password });
+        if (error) {
+        return res.status(400).json({ error: error.details[0].message });
+        }
+    
+        // Check if the user exists
+        const user = await User.findOne({ username });
+        if (!user) {
+        return res.status(401).json({ error: 'Invalid username or password' });
+        }
+    
+        // Validate the password
+        const validPassword = await bcrypt.compare(password, user.password);
+        if (!validPassword) {
+        return res.status(401).json({ error: 'Invalid username or password' });
+        }
+    
+        // Generate JWT token
+        const token = jwt.sign({ id: user._id }, process.evn.SECRET_KEY);
+    
+        res.json({ token });
+    } catch (error) {
+        res.status(500).json({ error: 'Internal server error' });
+    }
+    
 }
 
 

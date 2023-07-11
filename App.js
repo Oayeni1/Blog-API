@@ -10,6 +10,6 @@ app.use(express.json())
 app.use(route)
 
 app.listen(port, async () => {
-  await mongoose;
+   mongoose;
   console.log(`Server listening on port ${port}`);
 });

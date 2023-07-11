@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-require('dotenv/config');
+require('dotenv').config();
 
 const dbURL= process.env.COMPASS || process.env.MONGODB_URI
 mongoose.connect(dbURL, {
